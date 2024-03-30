@@ -1,11 +1,8 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import Collection from "@/components/Collection";
-import HomeProducts from "@/components/HomeProducts";
-import { useState } from "react";
+import HeadPart from "./HeadPart";
 const page = () => {
-  const [show] = useState(true);
   const categories = [
     {
       name: "Man's Collection",
@@ -28,11 +25,7 @@ const page = () => {
   ];
   return (
     <div className="w-full md:w-10/12 mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <Collection />
-      <span className="text-2xl font-bold text-center mt-10 mb-10">
-        Recent Products List
-      </span>
-      <HomeProducts show={show} />
+    <HeadPart/>
       <ul className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
         {categories?.map((category) => (
           <li key={category.name}>
