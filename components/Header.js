@@ -6,22 +6,22 @@ import { useContext, useEffect, useState } from "react";
 import SideCart from "./SideCart";
 import { Context } from "@/Context/Context";
 import axios from "axios";
-
+const categories =["mens", "womens" ,"kids" ]
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { user, handleLogout } = useContext(Context);
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
   const name = user?.data?.name.replace(/ .*/, "");
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await axios.get("/api/category");
-      setCategories(res?.data?.data);
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const res = await axios.get("/api/category");
+  //     setCategories(res?.data?.data);
+  //   };
+  //   fetchCategories();
+  // }, []);
   return (
     <div className="w-full relative">
       <header className="bg-white ">

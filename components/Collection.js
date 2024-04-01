@@ -7,13 +7,13 @@ const Collection = () => {
       <div className="mx-auto  lg:w-10/12 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <header className="text-center">
           <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-            New Collection
+          OUR LATEST ARRIVALS
           </h2>
 
-          <p className="mx-auto mt-4 max-w-md text-gray-500">
-            For unique and stylish clothing, shoes and accessories in the
-            collection you can select the best one for you.
+          <p className="mx-auto mt-4 max-w-xl text-gray-500 mb-10">
+          It’s critical to get the timing right when sending new stock arrival messages to customers. Since most people will read them right away,
           </p>
+          <Link href={""} className="px-10 py-2 border-2 border-gray-500 ">Shop All</Link>
         </header>
 
         <ul className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
