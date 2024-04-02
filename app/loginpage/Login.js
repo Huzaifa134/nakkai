@@ -15,6 +15,7 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
+  console.log(login)
   return (
     <div>
       <section className="relative flex flex-wrap lg:h-screen lg:items-center">

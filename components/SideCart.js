@@ -24,7 +24,7 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
   useEffect(() => {
     const getCart = async () => {
       try {
-        const res = await axios.post("/api/cart-item", {
+        const res = await axios.post("http://localhost:3000/api/cart-item", {
           userId: user?.data?._id,
         });
         if (res?.data?.cartItem?.length === 0) {
@@ -42,7 +42,7 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
   // remove item from cart
   const removeItem = async (productId) => {
     try {
-      const res = await axios.delete("/api/cart", {
+      const res = await axios.delete("http://localhost:3000/api/cart", {
         data: { id: productId },
       });
       if (res.status === 200) {

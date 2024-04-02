@@ -11,7 +11,7 @@ const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     const AllUser = async () => {
-      const { data } = await axios.get("/api/alluser");
+      const { data } = await axios.get("http://localhost:3000/api/alluser");
       setTotalUser(data.data);
     };
     AllUser();
@@ -19,7 +19,7 @@ const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     const Allproducts = async () => {
-      const { data } = await axios.get("/api/allproducts");
+      const { data } = await axios.get("http://localhost:3000/api/allproducts");
       setTotalProduct(data.data);
     };
     Allproducts();

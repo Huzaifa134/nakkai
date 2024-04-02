@@ -18,7 +18,7 @@ const Product = () => {
   const { user } = useContext(Context);
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(`/api/product/${_id}`);
+      const res = await axios.get(`http://localhost:3000/api/product/${_id}`);
       setProduct(res.data.data);
     };
     fetchProduct();

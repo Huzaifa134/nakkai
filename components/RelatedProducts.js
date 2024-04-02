@@ -9,7 +9,7 @@ const RelatedProducts = ({ id }) => {
   const [product, setProduct] = useState([]);
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios(`/api/relatedProducts/${id}`);
+      const res = await axios(`http://localhost:3000/api/relatedProducts/${id}`);
 
       setProduct(res.data);
     };

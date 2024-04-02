@@ -32,7 +32,7 @@ const ContextProvider = ({ children }) => {
         setMessage("Password must be at least 6 characters");
         setLoading(false);
       } else {
-        const response = await axios.post("/api/signup", signup);
+        const response = await axios.post("http://localhost:3000/api/signup", signup);
 
         setLoading(false);
         setError(response.data.status !== 201);
@@ -61,7 +61,7 @@ const ContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/login", login);
+      const response = await axios.post("http://localhost:3000/api/login", login);
 
       setLoading(false);
       setError(response.data.status !== 201);
@@ -95,7 +95,7 @@ const ContextProvider = ({ children }) => {
     let debouncedCurrentUser;
     const fetchUser = async () => {
       try {
-        const response = await axios.get("/api/login-user");
+        const response = await axios.get("http://localhost:3000/api/login-user");
         setUser(response.data);
       } catch (error) {
         setUser(null);
@@ -114,7 +114,7 @@ const ContextProvider = ({ children }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get("/api/logout");
+      const response = await axios.get("http://localhost:3000/api/logout");
       setUser(null);
       router.push("/loginpage");
     } catch (error) {

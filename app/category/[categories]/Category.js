@@ -4,12 +4,13 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import image from "@/public/banner2.png"
 
 const Category = ({ params }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`/api/category/${params}`);
+      const res = await axios.get(`http://localhost:3000/api/category/${params}`);
       setData(res.data.data);
     };
     fetchData();
@@ -26,10 +27,10 @@ const Category = ({ params }) => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center w-full h-96 bg-cover bg-center bg-no-repeat">
-        <div className="flex flex-col items-center justify-center w-full h-full bg-no-repeat bg-cover bg-hero-pattern">
-          <h1 className="text-4xl font-bold text-white">{params}</h1>
-          <p className="text-xl font-medium text-white">
+      <div className="flex flex-col items-center justify-center w-full h-96 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${image})` }}>
+        <div className="flex flex-col items-center justify-center w-full h-full bg-no-repeat bg-cover bg-hero-pattern" >
+          <h1 className="text-4xl font-bold text-black">{params}</h1>
+          <p className="text-xl font-medium text-black">
             For unique and stylish clothing in the collection you can select the
             best one for you.
           </p>

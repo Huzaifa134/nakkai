@@ -20,19 +20,19 @@ import { BsBag } from "react-icons/bs";
 import Image from "next/image";
 import logo from "@/public/logo.png";
 
-const categories =["mens", "womens" ,"kids" ]
+// const categories =["mens", "womens" ,"kids" ]
 
 const Homenav = () => {
-  // const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     const res = await axios.get("/api/category");
-  //     setCategories(res?.data?.data);
-  //   };
-  //   fetchCategories();
-  // }, []);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await axios.get("http://localhost:3000/api/category");
+      setCategories(res?.data?.data);
+    };
+    fetchCategories();
+  }, []);
   return (
     <div className="flex items-center justify-between w-[90%] m-auto mt-5">
       {/*hamburger*/}

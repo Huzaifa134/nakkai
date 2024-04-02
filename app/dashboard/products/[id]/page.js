@@ -14,7 +14,7 @@ const Product = () => {
   // get product details
   useEffect(() => {
     const GetProductDetails = async () => {
-      const res = await axios.get(`/api/allproducts/${params.id}`);
+      const res = await axios.get(`http://localhost:3000/api/allproducts/${params.id}`);
       setProduct(res?.data?.data);
     };
     GetProductDetails();
@@ -26,7 +26,7 @@ const Product = () => {
 
   // Handle update product details
   const UdateProducts = async () => {
-    const res = await axios.put(`/api/allproducts/${params.id}`, {
+    const res = await axios.put(`http://localhost:3000/api/allproducts/${params.id}`, {
       product,
     });
     route.push("/dashboard/products");
@@ -36,7 +36,7 @@ const Product = () => {
 
   //  Handle delete product
   const DeleteProduct = async () => {
-    const res = await axios.delete(`/api/allproducts/${params.id}`);
+    const res = await axios.delete(`http://localhost:3000/api/allproducts/${params.id}`);
     route.push("/dashboard/products");
     toast.success("Product deleted successfully");
     return res;
