@@ -8,14 +8,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-
 const Product = () => {
   const [product, setProduct] = useState({});
-
   const { _id } = useParams();
   const { cartdetails, setCartDetails, addItemToCart } =
     useContext(CartContext);
   const { user } = useContext(Context);
+
+
+
   useEffect(() => {
     const fetchProduct = async () => {
       const res = await axios.get(`http://localhost:3000/api/product/${_id}`);
@@ -27,7 +28,6 @@ const Product = () => {
     window.scrollTo(0, 0);
   }, []);
   if (!product?.mainImage) return <Skeleton />;
-
   return (
     <div>
       <section className="overflow-hidden bg-white py-11 font-poppins ">
@@ -218,11 +218,14 @@ const Product = () => {
                   <div className="w-full px-4 mb-4 lg:w-1/2 lg:mb-0">
                     {user?.data ? (
                       <button
-                        onClick={() => addItemToCart(product)}
-                        className="flex items-center bg-black justify-center w-full p-3 text-gray-200 font-semibold border border-gray-500 rounded-md  hover:bg-gray-800 hover:border-gray-600 hover:text-gray-50"
-                      >
-                        Add to Cart
-                      </button>
+                      onClick={() => addItemToCart(product)}
+                      disabled={product.quantity === 0} // Disable button when quantity is 0
+                      className={`flex items-center bg-black justify-center w-full p-3 text-gray-200 font-semibold border border-gray-500 rounded-md ${
+                        product.quantity === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800 hover:border-gray-600 hover:text-gray-50'
+                      }`}
+                    >
+                      {product.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                    </button>
                     ) : (
                       <Link
                         href="/loginpage"

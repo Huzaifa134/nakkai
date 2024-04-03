@@ -1,114 +1,118 @@
 import Image from "next/image";
 import Link from "next/link";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+// import video from "../public/world.webm"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 const HeroBanner = () => {
+  const [categories, setCategories] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await axios.get("http://localhost:3000/api/category");
+      setCategories(res?.data?.data);
+    };
+    fetchCategories();
+  }, []);
   return (
-    <div className="p-2">
-      <div className="relative overflow-hidden bg-white">
-        <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
-          <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
-            <div className="sm:max-w-lg">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Summer styles are finally here
-              </h1>
-              <p className="mt-4 text-xl text-gray-500">
-                This year, our new summer collection will shelter you from the
-                harsh elements of a world that doesnt care if you live or die.
-              </p>
-            </div>
-            <div>
-              <div className="mt-10">
-                {/* Decorative image grid */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
-                >
-                  <div className="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
-                    <div className="flex items-center space-x-6 lg:space-x-8">
-                      <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                        <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
-                          <Image
-                            width={300}
-                            height={300}
-                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                        <div className="h-64 w-44 overflow-hidden rounded-lg">
-                          <Image
-                            width={300}
-                            height={300}
-                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                      </div>
-                      <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                        <div className="h-64 w-44 overflow-hidden rounded-lg">
-                          <Image
-                            width={300}
-                            height={300}
-                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                        <div className="h-64 w-44 overflow-hidden rounded-lg">
-                          <Image
-                            width={300}
-                            height={300}
-                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                        <div className="h-64 w-44 overflow-hidden rounded-lg">
-                          <Image
-                            width={300}
-                            height={300}
-                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                      </div>
-                      <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                        <div className="h-64 w-44 overflow-hidden rounded-lg">
-                          <Image
-                            width={300}
-                            height={300}
-                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                        <div className="h-64 w-44 overflow-hidden rounded-lg">
-                          <Image
-                            width={300}
-                            height={300}
-                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <div className="flex justify-center items-center my-80">
+    <Sheet>
+    <SheetTrigger asChild>
+      <Button variant="none" className="text-xl">
+      <video autoPlay muted loop style={{ width: '1200px' }}>
+      <source src="/world.webm" />
+    </video>
+      </Button>
+    </SheetTrigger>
+    <SheetContent side={"left"}>
+      <div className="grid gap-4 py-4">
+        <ul className="mt-6 space-y-1">
+          <li>
+            <Link
+              href="/"
+              onClick={() => setIsOpen(false)}
+              className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+            >
+              Home
+            </Link>
+          </li>
 
-                <Link
-                  href="/products"
-                  className="inline-block rounded-md border border-transparent bg-[#2a2e33] px-8 py-3 text-center font-medium text-white hover:bg-[#12171d]"
-                >
-                  Shop Collection
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+          <li>
+            <details className="group [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                <span className="text-sm font-medium"> Categories </span>
+
+                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+              </summary>
+
+              <ul className="mt-2 space-y-1 px-4">
+                {categories?.map((category) => {
+                  return (
+                    <li key={category}>
+                      <Link
+                        href={`/category/${category}`}
+                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      >
+                        {category}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
+          </li>
+
+          <li>
+            <Link
+              href="/about"
+              onClick={() => setIsOpen(false)}
+              className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            >
+              About
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href="/products"
+              onClick={() => setIsOpen(false)}
+              className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            >
+              Products
+            </Link>
+          </li>
+        </ul>
       </div>
+    </SheetContent>
+  </Sheet>
+    
+
+
+      
     </div>
   );
 };

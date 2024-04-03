@@ -21,6 +21,7 @@ export const ProductContextProvider = ({ children }) => {
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [quantity, setQuantity] = useState("");
   const storage = getStorage(app);
   const route = useRouter();
 
@@ -83,6 +84,8 @@ export const ProductContextProvider = ({ children }) => {
           description: description,
           category: category,
           mainImage: media,
+          quantity: quantity,
+
         });
         route.push("/products");
         setName("");
@@ -91,6 +94,7 @@ export const ProductContextProvider = ({ children }) => {
         setCategory("");
         setFile(null);
         setMedia("");
+        setQuantity("");
         toast.success("Product created successfully");
       }
     } catch (error) {
@@ -124,6 +128,8 @@ export const ProductContextProvider = ({ children }) => {
         setFile,
         media,
         products,
+        quantity,
+        setQuantity,
       }}
     >
       {children}

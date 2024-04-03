@@ -1,8 +1,8 @@
-"use client";
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { Context } from "./Context";
 import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
 
 export const CartContext = createContext();
 
@@ -13,31 +13,76 @@ const CartProvider = ({ children }) => {
     size: "Medium",
   });
 
+  const { _id } = useParams();
+  const [product, setProduct] = useState({}); // Change to object instead of null
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        if (!_id) {
+          console.log("Error: _id is undefined or null.");
+          return;
+        }
+
+        const res = await axios.get(`http://localhost:3000/api/product/${_id}`);
+        setProduct(res.data.data); // Set product initially
+      } catch (error) {
+        console.log("Fetch product error:", error);
+      }
+    };
+    fetchProduct();
+  }, [_id]);
+
   // add item to cart
   const addItemToCart = async (e) => {
     try {
-      const res = await axios.post("http://localhost:3000/api/cart", {
-        userId: user?.data?._id,
-        items: [
-          {
-            productId: e._id,
-            image: e.mainImage,
-            price: e.price,
-            name: e.name,
-            quantity: cartdetails.quantity,
-            size: cartdetails.size,
-          },
-        ],
+      if (!product) {
+        toast.error("Product information not available.");
+        return;
+      }
+
+      const updatedQuantity = product.quantity - cartdetails.quantity;
+
+      if (updatedQuantity < 0) {
+        toast.error("Insufficient quantity available.");
+        return;
+      }
+
+      // Update product quantity in the state
+      setProduct({ ...product, quantity: updatedQuantity });
+
+      // Update quantity in the database
+      const upres = await axios.put(`http://localhost:3000/api/allproducts/${_id}`, {
+        product,
       });
 
-      toast.success(res?.data?.message);
-      setCartDetails({
-        quantity: 1,
-        size: "Medium",
-      });
+      if (upres.status === 200) {
+        // Add item to cart if quantity update is successful
+        const res = await axios.post("http://localhost:3000/api/cart", {
+          userId: user?.data?._id,
+          items: [
+            {
+              productId: e._id,
+              image: e.mainImage,
+              price: e.price,
+              name: e.name,
+              quantity: cartdetails.quantity,
+              size: cartdetails.size,
+            },
+          ],
+        });
+
+        toast.success("Product added to cart successfully");
+        setCartDetails({
+          quantity: 1,
+          size: "Medium",
+        });
+      } else {
+        toast.error("Failed to update product quantity.");
+      }
     } catch (error) {
-      console.log(error);
-      toast.error("An error occurred");
+      console.log("Add to cart error:", error);
+      toast.error("An error occurred while adding to cart");
     }
   };
 
@@ -53,4 +98,5 @@ const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
 export default CartProvider;

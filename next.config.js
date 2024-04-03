@@ -7,7 +7,8 @@ const nextConfig = {
       "i.ibb.co",
       "i.postimg.cc",
       "firebasestorage.googleapis.com",
-      'encrypted-tbn0.gstatic.com'
+      'encrypted-tbn0.gstatic.com',
+      'www.google.com'
     ],
   },
 };

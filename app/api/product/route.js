@@ -4,13 +4,14 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
   await connectDB();
-  const { name, price, description, category, mainImage } = await req.json();
+  const { name, price, description, category, mainImage ,quantity} = await req.json();
   const clothingProduct = await ClothingProduct.create({
     name,
     price,
     description,
     category,
     mainImage,
+    quantity
   });
   if (!clothingProduct)
     return NextResponse.json({ status: 400, message: "Product not created" });
