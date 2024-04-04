@@ -26,11 +26,11 @@ const HeroBanner = () => {
     fetchCategories();
   }, []);
   return (
-    <div className="flex justify-center items-center my-80">
-    <Sheet>
-    <SheetTrigger asChild>
-      <Button variant="none" className="text-xl">
-      <video autoPlay muted loop style={{ width: '1200px' }}>
+    <div className="flex justify-center   items-center md:my-72 my-48 lg:my-96">
+    <Sheet >
+    <SheetTrigger asChild >
+      <Button variant="none" className="" >
+      <video autoPlay muted  loop className="lg:w-[1400px] max-[340px]:w-[600px] max-[1000px]:w-[800px] max-[840px]:w-[800px] max-[500px]:max-w-3xl  "   >
       <source src="/world.webm" />
     </video>
       </Button>
