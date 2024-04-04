@@ -24,7 +24,7 @@ const CartProvider = ({ children }) => {
           return;
         }
 
-        const res = await axios.get(`http://localhost:3000/api/product/${_id}`);
+        const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
         setProduct(res.data.data); // Set product initially
       } catch (error) {
         console.log("Fetch product error:", error);
@@ -52,13 +52,13 @@ const CartProvider = ({ children }) => {
       setProduct({ ...product, quantity: updatedQuantity });
 
       // Update quantity in the database
-      const upres = await axios.put(`http://localhost:3000/api/allproducts/${_id}`, {
+      const upres = await axios.put(`https://nakkai.vercel.app/api/allproducts/${_id}`, {
         product,
       });
 
       if (upres.status === 200) {
         // Add item to cart if quantity update is successful
-        const res = await axios.post("http://localhost:3000/api/cart", {
+        const res = await axios.post("https://nakkai.vercel.app/api/cart", {
           userId: user?.data?._id,
           items: [
             {

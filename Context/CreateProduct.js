@@ -78,7 +78,7 @@ export const ProductContextProvider = ({ children }) => {
         return;
       }
       {
-        const res = await axios.post("http://localhost:3000/api/product", {
+        const res = await axios.post("https://nakkai.vercel.app/api/product", {
           name: name,
           price: price,
           description: description,
@@ -106,7 +106,7 @@ export const ProductContextProvider = ({ children }) => {
   };
   //  get all products
   useEffect(() => {
-    axios.get("http://localhost:3000/api/product").then((res) => {
+    axios.get("https://nakkai.vercel.app/api/product").then((res) => {
       setProducts(res.data);
     });
   }, []);

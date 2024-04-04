@@ -20,7 +20,7 @@ const HeroBanner = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await axios.get("http://localhost:3000/api/category");
+      const res = await axios.get("https://nakkai.vercel.app/api/category");
       setCategories(res?.data?.data);
     };
     fetchCategories();
@@ -30,7 +30,7 @@ const HeroBanner = () => {
     <Sheet >
     <SheetTrigger asChild >
       <Button variant="none" className="h-96 lg:h-[800px] max-[840px]:h-[400px] max-[1000px]:h-[800px]" >
-      <video autoPlay muted  loop height={1000} className="lg:w-[1400px] max-[340px]:w-[600px] max-[1000px]:max-w-7xl max-[840px]:max-w-6xl max-[600px]:max-w-3xl "   >
+      <video autoPlay muted  loop height={1000} className="lg:w-[1400px] max-[340px]:w-[600px] max-[1000px]:max-w-7xl max-[840px]:max-w-6xl max-[600px]:max-w-3xl min-[1500px]:max-w-full"   >
       <source src="/world.webm" />
     </video>
       </Button>

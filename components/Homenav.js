@@ -28,7 +28,7 @@ const Homenav = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await axios.get("http://localhost:3000/api/category");
+      const res = await axios.get("https://nakkai.vercel.app/api/category");
       setCategories(res?.data?.data);
     };
     fetchCategories();

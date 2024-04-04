@@ -11,7 +11,7 @@ const ProductProvider = ({ children }) => {
     try {
       // Make an API call to update the quantity in the database
       // Example:
-      await axios.put(`http://localhost:3000/api/product/${productId}`, { quantity: newQuantity });
+      await axios.put(`https://nakkai.vercel.app/api/product/${productId}`, { quantity: newQuantity });
       setQuantity(newQuantity);
     } catch (error) {
       console.error('Error updating quantity:', error);

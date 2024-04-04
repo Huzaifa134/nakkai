@@ -25,7 +25,7 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
   useEffect(() => {
     const getCart = async () => {
       try {
-        const res = await axios.post("http://localhost:3000/api/cart-item", {
+        const res = await axios.post("https://nakkai.vercel.app/api/cart-item", {
           userId: user?.data?._id,
         });
         if (res?.data?.cartItem?.length === 0) {
@@ -45,7 +45,7 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
   // remove item from cart
   const removeItem = async (productId) => {
     try {
-      const res = await axios.delete("http://localhost:3000/api/cart", {
+      const res = await axios.delete("https://nakkai.vercel.app/api/cart", {
         data: { id: productId },
       });
       if (res.status === 200) {
@@ -76,7 +76,7 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
   //         return;
   //       }
 
-  //       const res = await axios.get(`http://localhost:3000/api/product/${_id}`);
+  //       const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
   //       setProduct(res.data.data); // Set product initially
   //     } catch (error) {
   //       console.log("Fetch product error:", error);
@@ -100,13 +100,13 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
     //   usersCart.map(async (value,key) => {
     //     const _id=  value.items[0]._id;
     //     // console.log(value.items[0]._id)
-    //     // const res = await axios.get(`http://localhost:3000/api/product/${_id}`);
+    //     // const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
     //     // setProduct(res.data.data);
     //     // const updatedQuantity = product.quantity - usersCart[key].items[0].quantity;
     //     // console.log("updates quan",updatedQuantity)
     //     // // console.log("value", )
     //     // setProduct({ ...product, quantity: updatedQuantity });
-    //     // const upres = await axios.put(`http://localhost:3000/api/allproducts/${_id}`, {
+    //     // const upres = await axios.put(`https://nakkai.vercel.app/api/allproducts/${_id}`, {
     //     //   product,
     //     // });
     //   });

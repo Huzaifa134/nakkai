@@ -10,7 +10,7 @@ const Category = ({ params }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:3000/api/category/${params}`);
+      const res = await axios.get(`https://nakkai.vercel.app/api/category/${params}`);
       setData(res.data.data);
     };
     fetchData();

@@ -29,11 +29,7 @@ const clothingProduct = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantity: {
-    type: Number,
-    required: true,
-    min:0,
-  },
+  
 });
 
 const ClothingProduct =

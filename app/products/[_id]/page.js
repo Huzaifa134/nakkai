@@ -19,7 +19,7 @@ const Product = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(`http://localhost:3000/api/product/${_id}`);
+      const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
       setProduct(res.data.data);
     };
     fetchProduct();

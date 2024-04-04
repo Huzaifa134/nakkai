@@ -11,7 +11,7 @@ const User = () => {
 
   useEffect(() => {
     const AllUser = async () => {
-      const { data } = await axios.get("http://localhost:3000/api/alluser");
+      const { data } = await axios.get("https://nakkai.vercel.app/api/alluser");
       setUser(data.data);
     };
     AllUser();
