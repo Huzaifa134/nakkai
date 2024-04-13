@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useContext } from "react";
 
 const Form = () => {
+
   const {
     fetchProduct,
     name,
@@ -18,6 +19,8 @@ const Form = () => {
     setFile,
     media,
     uploading,
+    subcategory,
+    setSubcategory,
   } = useContext(ProductContext);
 
   const handleDragOver = (e) => {
@@ -41,6 +44,9 @@ const Form = () => {
         break;
       case "category":
         setCategory(e.target.value);
+        break;
+      case "subcategory":
+        setSubcategory(e.target.value);
         break;
       default:
         break;
@@ -144,6 +150,31 @@ const Form = () => {
             <option value="Kids">Kids</option>
           </select>
         </div>
+        <div className="flex flex-col items-center justify-center  mt-3">
+        <label
+          htmlFor="subcategory"
+          className=" w-full flex items-start justify-start  text-gray-700 text-sm md:text-base font-medium"
+        >
+         Sub Category:
+        </label>
+        <select
+          name="subcategory"
+          id="subcategory"
+          className="w-full border border-gray-300 p-2 rounded-md mt-2"
+          placeholder="Select subcategory"
+          required
+          value={subcategory}
+          onChange={handleChange}
+        >
+          <option value="" disabled>
+            Select subcategory
+          </option>
+          <option value="Shirts">Shirts</option>
+          <option value="T-shirts">T-shirts</option>
+          <option value="Sweatshirts">Sweatshirts</option>
+          <option value="Trousers">Trousers</option>
+        </select>
+      </div>
         <div className="flex flex-col items-center justify-center  mt-3">
           <label
             htmlFor="description"

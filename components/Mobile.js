@@ -1,11 +1,19 @@
 "use client";
 import { Context } from "@/Context/Context";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext ,useState} from "react";
 
 const Mobile = ({ setIsOpen, categories }) => {
   const { user, handleLogout } = useContext(Context);
   const name = user?.data?.name.replace(/ .*/, "");
+  const toggleCategory = (category) => {
+    setOpenCategories((prevOpenCategories) => ({
+      ...prevOpenCategories,
+      [category]: !prevOpenCategories[category],
+    }));
+  };
+  const [openCategories, setOpenCategories] = useState({});
+  const subCategories = ["Shirts", "T-shirts", "Sweatshirts", "Trousers"];
   return (
     <div>
       <div className="flex h-screen flex-col justify-between border-e bg-white">
@@ -54,41 +62,64 @@ const Mobile = ({ setIsOpen, categories }) => {
               </li>
             )}
             <li>
-              <details className="group [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                  <span className="text-sm font-medium"> Categories </span>
-
-                  <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                </summary>
-
-                <ul className="mt-2 space-y-1 px-4">
-                  {categories?.map((category) => {
-                    return (
-                      <li key={category}>
-                        <Link
-                          href={`/category/${category}`}
-                          className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            <details className="group [&_summary::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <span className="text-sm font-medium"> Categories </span>
+              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-5 w-5 transform ${Object.values(openCategories).some((isOpen) => isOpen) ? '-rotate-180' : ''}`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+            </summary>
+      
+            <ul className="mt-2 space-y-1 px-4">
+              {categories.map((category) => (
+                <li key={category}>
+                  <details className="group [&_summary::-webkit-details-marker]:hidden" open={openCategories[category]} onClick={() => toggleCategory(category)}>
+                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                      <Link href={`/category/${category}`} className="text-sm font-medium"> {category} </Link>
+                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className={`h-5 w-5 transform ${openCategories[category] ? '-rotate-180' : ''}`}
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
                         >
-                          {category}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </details>
+                          <path
+                            fillRule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </summary>
+      
+                    <ul className="mt-2 space-y-1 px-4">
+                      {subCategories?.map((subcategory) => (
+                        <li key={subcategory}>
+                          <Link
+                            href={`/category/${category}/${subcategory}`}
+                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                          >
+                            {subcategory}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              ))}
+            </ul>
+          </details>
             </li>
 
             <li>

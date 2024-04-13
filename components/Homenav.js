@@ -20,12 +20,11 @@ import { BsBag } from "react-icons/bs";
 import Image from "next/image";
 import logo from "@/public/logo.png";
 
-// const categories =["mens", "womens" ,"kids" ]
-
 const Homenav = () => {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [openCategories, setOpenCategories] = useState({});
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await axios.get("https://nakkai.vercel.app/api/category");
@@ -33,6 +32,14 @@ const Homenav = () => {
     };
     fetchCategories();
   }, []);
+  const subCategories = ["Shirts", "T-shirts", "Sweatshirts", "Trousers"];
+  const toggleCategory = (category) => {
+    setOpenCategories((prevOpenCategories) => ({
+      ...prevOpenCategories,
+      [category]: !prevOpenCategories[category],
+    }));
+  };
+
   return (
     <div className="flex items-center justify-between w-[90%] m-auto mt-5">
       {/*hamburger*/}
@@ -60,11 +67,16 @@ const Homenav = () => {
                   <details className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                       <span className="text-sm font-medium"> Categories </span>
-
                       <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5"
+                          className={`h-5 w-5 transform ${
+                            Object.values(openCategories).some(
+                              (isOpen) => isOpen
+                            )
+                              ? "-rotate-180"
+                              : ""
+                          }`}
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -78,18 +90,51 @@ const Homenav = () => {
                     </summary>
 
                     <ul className="mt-2 space-y-1 px-4">
-                      {categories?.map((category) => {
-                        return (
-                          <li key={category}>
-                            <Link
-                              href={`/category/${category}`}
-                              className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                            >
-                              {category}
-                            </Link>
-                          </li>
-                        );
-                      })}
+                      {categories.map((category) => (
+                        <li key={category}>
+                          <details className="group [&_summary::-webkit-details-marker]:hidden">
+                            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                              <Link
+                                className="text-sm font-medium"
+                                href={`/category/${category}`}
+                              >
+                                {" "}
+                                {category}{" "}
+                              </Link>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-5 w-5"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clipRule="evenodd"
+                                  />
+                                </svg>
+                              </span>
+                            </summary>
+
+                            <ul className="mt-2 space-y-1 px-4">
+                              {subCategories?.map((subcategory) => {
+                                return (
+                                  <li key={subcategory}>
+                                    <Link
+                                      href={`/category/${category}/${subcategory}`}
+                                      className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                    >
+                                      {subcategory}
+                                    </Link>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </details>
+                        </li>
+                      ))}
                     </ul>
                   </details>
                 </li>
@@ -122,8 +167,7 @@ const Homenav = () => {
       <div>
         <Link className="block text-teal-600" href="/">
           <span className="sr-only">Home</span>
-          <Image src={logo} alt="logo"/>
-          
+          <Image src={logo} alt="logo" />
         </Link>
       </div>
       {/*cart*/}

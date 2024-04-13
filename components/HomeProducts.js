@@ -39,7 +39,7 @@ import banner1 from "@/public/banner1.png";
 
 const HomeProducts = ({ show }) => {
   const { products } = useContext(ProductContext);
-  console.log(products)
+  console.log("these are product page products",products)
   if (!products?.data) {
     return (
       <div

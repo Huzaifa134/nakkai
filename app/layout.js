@@ -16,20 +16,11 @@ import { usePathname } from 'next/navigation'
 const inter = Montserrat({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
-  // Initialize useRouter within the component function
   const router = useRouter();
-  // const { pathname } = router;
-
-  // Log the pathname to check its value
-  // useEffect(() => {
-  //   console.log("Current pathname:", pathname);
-  // }, [pathname]);
-
-  // Check if the current page is the home page
+  //
   const isHomePage = usePathname() === "/";
 
-  console.log("Is home page:", isHomePage);
-
+  
   return (
     <html lang="en">
       <body className={inter.className}>

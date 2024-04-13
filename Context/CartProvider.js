@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 import { Context } from "./Context";
@@ -32,7 +33,7 @@ const CartProvider = ({ children }) => {
     };
     fetchProduct();
   }, [_id]);
-
+console.log("this is id from cartproivider",_id)
   // add item to cart
   const addItemToCart = async (e) => {
     try {

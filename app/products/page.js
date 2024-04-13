@@ -10,6 +10,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import HomeProducts from "@/components/HomeProducts";
+import Link from "next/link";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -18,55 +19,62 @@ const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
+const categories = [
+  { name: "Men", href: "/category/Men" },
+  { name: "Women", href: "/category/Women" },
+  { name: "Kids", href: "/category/Kids" },
 ];
+const subCategories = ["Shirts", "T-shirts", "Sweatshirts", "Trousers"];
 const filters = [
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
-    ],
-  },
-  {
-    id: "size",
-    name: "Size",
-    options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
-    ],
-  },
+  // {
+  //   id: "color",
+  //   name: "Color",
+  //   options: [
+  //     { value: "white", label: "White", checked: false },
+  //     { value: "beige", label: "Beige", checked: false },
+  //     { value: "blue", label: "Blue", checked: true },
+  //     { value: "brown", label: "Brown", checked: false },
+  //     { value: "green", label: "Green", checked: false },
+  //     { value: "purple", label: "Purple", checked: false },
+  //   ],
+  // },
+  // {
+  //   id: "category",
+  //   name: "Category",
+  //   options: [
+  //     { value: "new-arrivals", label: "New Arrivals", checked: false },
+  //     { value: "sale", label: "Sale", checked: false },
+  //     { value: "travel", label: "Travel", checked: true },
+  //     { value: "organization", label: "Organization", checked: false },
+  //     { value: "accessories", label: "Accessories", checked: false },
+  //   ],
+  // },
+  // {
+  //   id: "size",
+  //   name: "Size",
+  //   options: [
+  //     { value: "2l", label: "2L", checked: false },
+  //     { value: "6l", label: "6L", checked: false },
+  //     { value: "12l", label: "12L", checked: false },
+  //     { value: "18l", label: "18L", checked: false },
+  //     { value: "20l", label: "20L", checked: false },
+  //     { value: "40l", label: "40L", checked: true },
+  //   ],
+  // },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
 const Products = () => {
+  const toggleCategory = (category) => {
+    setOpenCategories((prevOpenCategories) => ({
+      ...prevOpenCategories,
+      [category]: !prevOpenCategories[category],
+    }));
+  };
+  const [openCategories, setOpenCategories] = useState({});
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   return (
     <div className="bg-white">
@@ -124,9 +132,9 @@ const Products = () => {
                     >
                       {subCategories.map((category) => (
                         <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
+                          <Link href={category.href} className="block px-2 py-3">
                             {category.name}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -278,11 +286,65 @@ const Products = () => {
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
                 >
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
+                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                  <span className="text-sm font-medium"> Categories </span>
+                  <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className={`h-5 w-5 transform ${Object.values(openCategories).some((isOpen) => isOpen) ? '-rotate-180' : ''}`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </summary>
+          
+                <ul className="mt-2 space-y-1 px-4">
+  {categories.map((category) => (
+    <li key={category.name}>
+      <details className="group [&_summary::-webkit-details-marker]:hidden" open={openCategories[category.name]} onClick={() => toggleCategory(category.name)}>
+        <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+          <Link href={category.href} className="text-sm font-medium"> {category.name} </Link>
+          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`h-5 w-5 transform ${openCategories[category.name] ? '-rotate-180' : ''}`}
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </span>
+        </summary>
+
+        <ul className="mt-2 space-y-1 px-4">
+          {subCategories?.map((subcategory) => (
+            <li key={subcategory}>
+              <Link
+                href={`/category/${category.name}/${subcategory}`}
+                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              >
+                {subcategory}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </li>
+  ))}
+</ul>
+
+              </details>
                 </ul>
 
                 {filters.map((section) => (

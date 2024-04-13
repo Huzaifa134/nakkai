@@ -14,7 +14,9 @@ const Header = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { user, handleLogout } = useContext(Context);
   const [categories, setCategories] = useState([]);
+  // const [subCategories, setSubCategories] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState(false);
   const name = user?.data?.name.replace(/ .*/, "");
 
   useEffect(() => {
@@ -24,6 +26,15 @@ const Header = () => {
     };
     fetchCategories();
   }, []);
+  // useEffect(() => {
+  //   const fetchsubCategories = async () => {
+  //     const res = await axios.get("https://nakkai.vercel.app/api/category/Women/subcategory");
+  //     setSubCategories(res?.data?.data);
+  //   };
+  //   fetchsubCategories();
+  // }, []);
+  const subCategories = ["Shirts", "T-shirts", "Sweatshirts", "Trousers"];
+  console.log("these are sub category",subCategories)
   return (
     <div className="w-full relative mt-5">
       <header className="bg-white ">
@@ -44,6 +55,14 @@ const Header = () => {
                   </Link>
                 </li>
 
+                <li>
+                <Link
+                  className="text-gray-800 hidden transition hover:text-gray-800/75 "
+                  href="/checkout"
+                >
+                  Checkout
+                </Link>
+              </li>
                 <li
                   className="relative"
                   onMouseEnter={() => setIsHovered(true)}
@@ -60,16 +79,45 @@ const Header = () => {
                       onMouseLeave={() => setIsHovered(false)}
                       className="absolute top-8 left-0 w-48 bg-white shadow-lg rounded-lg py-3 z-50"
                     >
-                      {categories?.map((category) => (
-                        <li key={category}>
-                          <Link
-                            href={`/category/${category}`}
-                            className="block px-5 py-2.5 text-sm text-gray-800 transition hover:bg-gray-100"
-                          >
-                            {category}
-                          </Link>
-                        </li>
-                      ))}
+                    {categories?.map((category) => (
+                      <li key={category}>
+                        <details className="group [&_summary::-webkit-details-marker]:hidden">
+                          <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                            <Link className="text-sm font-medium" href={`/category/${category}`}> {category} </Link>
+      
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          </summary>
+      
+                          <ul className="mt-2 space-y-1 px-4">
+                            {subCategories?.map((subcategory) => {
+                              return (
+                                <li key={subcategory}>
+                                  <Link
+                                    href={`/category/${category}/${subcategory}`}
+                                    className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                  >
+                                    {subcategory}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </details>
+                      </li>
+                    ))}
                     </ul>
                   )}
                 </li>
@@ -91,6 +139,7 @@ const Header = () => {
                     Contact
                   </Link>
                 </li>
+               
                 {user?.data?.isAdmin && (
                   <li>
                     <Link
@@ -169,7 +218,7 @@ const Header = () => {
         <div
           className={`absolute left-0 top-0 w-52 md:hidden bg-white shadow-lg rounded-lg z-50`}
         >
-          <Mobile setIsOpen={setIsOpen} categories={categories} />
+          <Mobile setIsOpen={setIsOpen} categories={categories} subCategories={subCategories}/>
         </div>
       )}
       {isCartOpen && (

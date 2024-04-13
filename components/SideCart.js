@@ -66,24 +66,7 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
     console.log(value.items[0]._id)
   })
 })();
-  // console.log(_id)
-
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       if (!_id) {
-  //         console.log("Error: _id is undefined or null.");
-  //         return;
-  //       }
-
-  //       const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
-  //       setProduct(res.data.data); // Set product initially
-  //     } catch (error) {
-  //       console.log("Fetch product error:", error);
-  //     }
-  //   };
-  //   fetchProduct();
-  // }, [_id]);
+  
 
 
 
@@ -91,32 +74,6 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
 
 
 
-  // product.map((item)=>{
-  //   console.log(item)
-
-  // }) 
-  // const quantityChecker= async ()=>{
-    // (async () => {
-    //   usersCart.map(async (value,key) => {
-    //     const _id=  value.items[0]._id;
-    //     // console.log(value.items[0]._id)
-    //     // const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
-    //     // setProduct(res.data.data);
-    //     // const updatedQuantity = product.quantity - usersCart[key].items[0].quantity;
-    //     // console.log("updates quan",updatedQuantity)
-    //     // // console.log("value", )
-    //     // setProduct({ ...product, quantity: updatedQuantity });
-    //     // const upres = await axios.put(`https://nakkai.vercel.app/api/allproducts/${_id}`, {
-    //     //   product,
-    //     // });
-    //   });
-    // })();
-  // }
-  // usersCart?.map((user, userIndex) => {
-  //   console.log("this is user cart",user.items[0].quantity)
-  // })
-  // console.log("this is user cart",usersCart)
-  // console.log("this is the useeffect",product)
 
 
   return (
@@ -290,7 +247,8 @@ const SideCart = ({ setIsCartOpen, isCartOpen }) => {
                                 : ""
                             }`}
                           >
-                            <Button />
+                            
+                            <Link onClick={() => setIsCartOpen(false)} href="/checkout" className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#2f4550] px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-[#2f4550]">Click for checkout  </Link>
                           </div>
                         ) : (
                           <Link

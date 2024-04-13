@@ -20,6 +20,11 @@ const clothingProduct = new mongoose.Schema({
     required: true,
     enum: ["Men", "Women", "Kids"],
   },
+  subcategory: {
+    type: String,
+    required:true,
+    enum: ["Shirts", "T-shirts", "Sweatshirts", "Trousers"],
+  },
   size: {
     type: [String],
     enum: ["Small", "Medium", "Large", "Extra Large"],

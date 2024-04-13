@@ -4,6 +4,7 @@ import Link from "next/link";
 import HeadPart from "./HeadPart";
 import clothing from "@/public/clothing.jpg";
 const page = () => {
+  
   const categories = [
     {
       name: "Man's Collection",
