@@ -8,6 +8,7 @@ import image from "@/public/banner2.png"
 
 const Category = ({ params }) => {
   const [data, setData] = useState([]);
+  
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(`https://nakkai.vercel.app/api/category/${params}`);

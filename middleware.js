@@ -34,5 +34,6 @@ export const middleware = (request) => {
   }
 };
 export const config = {
-  matcher: ["/", "/loginpage", "/signupPage", "/dashboard", "/api/:path*"],
+  // matcher: ["/", "/loginpage", "/signupPage", "/dashboard", "/api/:path*"],
+  matcher: ["/", "/loginpage", "/signupPage", "/dashboard"],
 };
