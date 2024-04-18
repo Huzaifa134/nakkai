@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { Context } from "./Context";
 import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
-
+import { useSelectedCountry } from "../Context/selectCountry";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
@@ -16,6 +16,7 @@ const CartProvider = ({ children }) => {
 
   const { _id } = useParams();
   const [product, setProduct] = useState({}); // Change to object instead of null
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -25,14 +26,14 @@ const CartProvider = ({ children }) => {
           return;
         }
 
-        const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
+        const res = await axios.get(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'usproduct':'product'}/${_id}`);
         setProduct(res.data.data); // Set product initially
       } catch (error) {
         console.log("Fetch product error:", error);
       }
     };
     fetchProduct();
-  }, [_id]);
+  }, [_id,selectedCountry]);
 console.log("this is id from cartproivider",_id)
   // add item to cart
   const addItemToCart = async (e) => {
@@ -53,7 +54,7 @@ console.log("this is id from cartproivider",_id)
       setProduct({ ...product, quantity: updatedQuantity });
 
       // Update quantity in the database
-      const upres = await axios.put(`https://nakkai.vercel.app/api/allproducts/${_id}`, {
+      const upres = await axios.put(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'usallproducts':'allproducts'}/${_id}`, {
         product,
       });
 

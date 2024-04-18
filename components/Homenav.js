@@ -19,19 +19,30 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { BsBag } from "react-icons/bs";
 import Image from "next/image";
 import logo from "@/public/logo.png";
+import { useSelectedCountry } from "../Context/selectCountry";
 
 const Homenav = () => {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [openCategories, setOpenCategories] = useState({});
+  const [rotatedCategories, setRotatedCategories] = useState({});
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
+
+  // Function to handle click on arrow icon
+  const handleClick = (category) => {
+    setRotatedCategories(prevState => ({
+      ...prevState,
+      [category]: !prevState[category] // Toggle rotation state for the clicked category
+    }));
+  };
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await axios.get("https://nakkai.vercel.app/api/category");
+      const res = await axios.get(`https://nakkai.vercel.app/api/${selectedCountry === "us"?'uscategory':'category'}`);
       setCategories(res?.data?.data);
     };
     fetchCategories();
-  }, []);
+  }, [selectedCountry]);
   const subCategories = ["Shirts", "T-shirts", "Sweatshirts", "Trousers"];
   const toggleCategory = (category) => {
     setOpenCategories((prevOpenCategories) => ({
@@ -91,7 +102,7 @@ const Homenav = () => {
 
                     <ul className="mt-2 space-y-1 px-4">
                       {categories.map((category) => (
-                        <li key={category}>
+                        <li key={category} onClick={() => handleClick(category)}>
                           <details className="group [&_summary::-webkit-details-marker]:hidden">
                             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                               <Link
@@ -102,20 +113,23 @@ const Homenav = () => {
                                 {category}{" "}
                               </Link>
 
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="h-5 w-5"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                    clipRule="evenodd"
-                                  />
-                                </svg>
-                              </span>
+                              <span
+                              className="shrink-0 transition duration-300 group-open"
+                              
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className={`h-5 w-5 transform ${rotatedCategories[category] ? "-rotate-90" : ""}`}
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </span>
                             </summary>
 
                             <ul className="mt-2 space-y-1 px-4">

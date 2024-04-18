@@ -8,8 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import { useSelectedCountry } from "../../../Context/selectCountry";
 const Product = () => {
   const [product, setProduct] = useState({});
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
   const { _id } = useParams();
   const { cartdetails, setCartDetails, addItemToCart } =
     useContext(CartContext);
@@ -19,11 +21,11 @@ const Product = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(`https://nakkai.vercel.app/api/product/${_id}`);
+      const res = await axios.get(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'usproduct':'product'}/${_id}`);
       setProduct(res.data.data);
     };
     fetchProduct();
-  }, [_id]);
+  }, [_id,selectedCountry]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

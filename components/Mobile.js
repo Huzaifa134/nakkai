@@ -1,9 +1,9 @@
 "use client";
 import { Context } from "@/Context/Context";
 import Link from "next/link";
-import { useContext ,useState} from "react";
+import { useContext ,useState , useEffect} from "react";
 
-const Mobile = ({ setIsOpen, categories }) => {
+const Mobile = ({ setIsOpen, categories ,isOpen}) => {
   const { user, handleLogout } = useContext(Context);
   const name = user?.data?.name.replace(/ .*/, "");
   const toggleCategory = (category) => {
@@ -14,8 +14,27 @@ const Mobile = ({ setIsOpen, categories }) => {
   };
   const [openCategories, setOpenCategories] = useState({});
   const subCategories = ["Shirts", "T-shirts", "Sweatshirts", "Trousers"];
+
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if the sidebar is open and the click target is not within the sidebar
+      if (isOpen && !event.target.closest("#menu")) {
+        setIsOpen(false); // Close the sidebar
+      }
+    };
+
+    // Add event listener to listen for clicks on the document body
+    document.body.addEventListener("click", handleClickOutside);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen, setIsOpen]);
+
   return (
-    <div>
+    <div >
       <div className="flex h-screen flex-col justify-between border-e bg-white">
         <div className="px-4 py-6">
           <Link onClick={() => setIsOpen(false)} href="/">

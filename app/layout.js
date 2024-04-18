@@ -13,6 +13,7 @@ import CartProvider from "@/Context/CartProvider";
 import AdminProvider from "@/Context/AdminProvider";
 import Homenav from "@/components/Homenav";
 import { usePathname } from 'next/navigation'
+import { SelectedCountryProvider } from "@/Context/selectCountry";
 const inter = Montserrat({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NextTopLoader color="#000" height={4} />
+        <SelectedCountryProvider>
         <ContextProvider>
           <AdminProvider>
             <ProductContextProvider>
@@ -37,6 +39,7 @@ export default function RootLayout({ children }) {
             </ProductContextProvider>
           </AdminProvider>
         </ContextProvider>
+        </SelectedCountryProvider>
       </body>
     </html>
   );

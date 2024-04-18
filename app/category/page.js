@@ -8,7 +8,7 @@ const page = () => {
   const categories = [
     {
       name: "Man's Collection",
-      link: "men",
+      link: "Men",
       image:
         "https://images.unsplash.com/photo-1610384104075-e05c8cf200c3?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
@@ -20,7 +20,7 @@ const page = () => {
     },
     {
       name: "Women's Collection",
-      link: "women",
+      link: "Women",
       image:
         "https://images.unsplash.com/photo-1552874869-5c39ec9288dc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },

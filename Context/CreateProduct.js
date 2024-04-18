@@ -10,7 +10,7 @@ import {
 import { app } from "./Firebase";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
+import { useSelectedCountry } from "../Context/selectCountry";
 export const ProductContext = createContext();
 
 export const ProductContextProvider = ({ children }) => {
@@ -25,7 +25,7 @@ export const ProductContextProvider = ({ children }) => {
   const [subcategory, setSubcategory] = useState("");
   const storage = getStorage(app);
   const route = useRouter();
-
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
   const [products, setProducts] = useState([]);
 
   // upload image
@@ -79,7 +79,7 @@ export const ProductContextProvider = ({ children }) => {
         return;
       }
       {
-        const res = await axios.post("https://nakkai.vercel.app/api/product", {
+        const res = await axios.post(`https://nakkai.vercel.app/api/${selectedCountry === "us"? 'usproduct':'product'}`, {
           name: name,
           price: price,
           description: description,
@@ -110,10 +110,10 @@ export const ProductContextProvider = ({ children }) => {
   };
   //  get all products
   useEffect(() => {
-    axios.get("https://nakkai.vercel.app/api/product").then((res) => {
+    axios.get(`https://nakkai.vercel.app/api/${selectedCountry === "us"? 'usproduct':'product'}`).then((res) => {
       setProducts(res.data);
     });
-  }, []);
+  }, [selectedCountry]);
   return (
     <ProductContext.Provider
       value={{

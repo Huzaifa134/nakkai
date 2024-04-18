@@ -5,18 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import image from "@/public/banner2.png"
-
+import { useSelectedCountry } from "../../../Context/selectCountry";
 const Category = ({ params }) => {
   const [data, setData] = useState([]);
-  
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`https://nakkai.vercel.app/api/category/${params}`);
+      const res = await axios.get(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'uscategory':'category'}/${params}`);
       setData(res.data.data);
     };
     fetchData();
     window.scrollTo(0, 0);
-  }, [params]);
+  }, [params,selectedCountry]);
 
   if (!data[0]?.mainImage) {
     return (

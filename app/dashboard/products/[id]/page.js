@@ -5,20 +5,21 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import SInglePRoductSkeleton from "../../SInglePRoductSkeleton";
-
+import { useSelectedCountry } from "../../../Context/selectCountry";
 const Product = () => {
   const params = useParams();
   const [product, setProduct] = useState({});
   const route = useRouter();
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
 
   // get product details
   useEffect(() => {
     const GetProductDetails = async () => {
-      const res = await axios.get(`https://nakkai.vercel.app/api/allproducts/${params.id}`);
+      const res = await axios.get(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'usallproducts':'allproducts'}/${params.id}`);
       setProduct(res?.data?.data);
     };
     GetProductDetails();
-  }, [params]);
+  }, [params,selectedCountry]);
 
   const handleInputChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -26,7 +27,7 @@ const Product = () => {
 
   // Handle update product details
   const UdateProducts = async () => {
-    const res = await axios.put(`https://nakkai.vercel.app/api/allproducts/${params.id}`, {
+    const res = await axios.put(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'usallproducts':'allproducts'}/${params.id}`, {
       product,
     });
     route.push("/dashboard/products");
@@ -36,7 +37,7 @@ const Product = () => {
 
   //  Handle delete product
   const DeleteProduct = async () => {
-    const res = await axios.delete(`https://nakkai.vercel.app/api/allproducts/${params.id}`);
+    const res = await axios.delete(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'usallproducts':'allproducts'}/${params.id}`);
     route.push("/dashboard/products");
     toast.success("Product deleted successfully");
     return res;

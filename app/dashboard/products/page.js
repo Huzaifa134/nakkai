@@ -5,19 +5,19 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import TableSkeleton from "../TableSkeleton";
-
+import { useSelectedCountry } from "../../../Context/selectCountry";
 const Products = () => {
   const [products, setproducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
-
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
   useEffect(() => {
     const Allproducts = async () => {
-      const { data } = await axios.get("https://nakkai.vercel.app/api/allproducts");
+      const { data } = await axios.get(`https://nakkai.vercel.app/api/${selectedCountry==="us"?'usallproducts':'allproducts'}`);
       setproducts(data.data);
     };
     Allproducts();
-  }, []);
+  }, [selectedCountry]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

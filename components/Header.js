@@ -8,6 +8,7 @@ import { Context } from "@/Context/Context";
 import axios from "axios";
 import logo from "@/public/logo.png";
 import Image from "next/image";
+import { useSelectedCountry } from "../Context/selectCountry";
 // const categories =["mens", "womens" ,"kids" ]
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,14 +19,15 @@ const Header = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState(false);
   const name = user?.data?.name.replace(/ .*/, "");
+  const { selectedCountry , setSelectedCountry } = useSelectedCountry();
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await axios.get("https://nakkai.vercel.app/api/category");
+      const res = await axios.get(`https://nakkai.vercel.app/api/${selectedCountry === "us"?'uscategory':'category'}`);
       setCategories(res?.data?.data);
     };
     fetchCategories();
-  }, []);
+  }, [selectedCountry]);
   // useEffect(() => {
   //   const fetchsubCategories = async () => {
   //     const res = await axios.get("https://nakkai.vercel.app/api/category/Women/subcategory");
@@ -33,10 +35,18 @@ const Header = () => {
   //   };
   //   fetchsubCategories();
   // }, []);
+  const toggleClick = ()=>{
+    setIsOpen(!isOpen)
+
+}
+
+
+  
+
   const subCategories = ["Shirts", "T-shirts", "Sweatshirts", "Trousers"];
   console.log("these are sub category",subCategories)
   return (
-    <div className="w-full relative mt-5">
+    <div className="w-full relative mt-5" >
       <header className="bg-white ">
         <div className="mx-auto flex h-16 max-w-screen-2xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <Link className="block text-teal-600" href="/" >
@@ -191,7 +201,9 @@ const Header = () => {
               )}
 
               <button
-                onClick={() => setIsOpen(!isOpen)}
+              
+                // onClick={() => setIsOpen(!isOpen)}
+                onClick={toggleClick}
                 className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75  md:hidden"
               >
                 <span className="sr-only">Toggle menu</span>
@@ -216,9 +228,10 @@ const Header = () => {
       </header>
       {isOpen && (
         <div
+        id="menu"
           className={`absolute left-0 top-0 w-52 md:hidden bg-white shadow-lg rounded-lg z-50`}
         >
-          <Mobile setIsOpen={setIsOpen} categories={categories} subCategories={subCategories}/>
+          <Mobile setIsOpen={setIsOpen} categories={categories} subCategories={subCategories} isOpen={isOpen}/>
         </div>
       )}
       {isCartOpen && (
