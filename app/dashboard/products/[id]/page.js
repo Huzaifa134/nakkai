@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import SInglePRoductSkeleton from "../../SInglePRoductSkeleton";
-import { useSelectedCountry } from "../../../Context/selectCountry";
+import { useSelectedCountry } from "../../../../Context/selectCountry";
 const Product = () => {
   const params = useParams();
   const [product, setProduct] = useState({});
