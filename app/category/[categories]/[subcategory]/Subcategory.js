@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import image from "@/public/banner2.png"
-import { useSelectedCountry } from "../../../Context/selectCountry";
+import { useSelectedCountry } from "../../../../Context/selectCountry";
 const Subcategory = ({ params,paramss }) => {
   const [data, setData] = useState([]);
   const { selectedCountry , setSelectedCountry } = useSelectedCountry();
