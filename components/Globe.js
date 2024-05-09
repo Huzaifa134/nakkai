@@ -16,7 +16,7 @@ const options = {
 };
 
 
-const Globe = () => {
+const ReactGlobe = () => {
     const randomMarkers = defaultMarkers.map((marker) => ({
         ...marker,
         value: Math.floor(Math.random() * 100)
@@ -97,4 +97,4 @@ const Globe = () => {
     }
 
 
-export default Globe;
+export default ReactGlobe;

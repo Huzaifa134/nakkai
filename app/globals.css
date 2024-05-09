@@ -94,3 +94,25 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* .globeContainerStyle { */
+ 
+
+@media screen and (min-width: 768px) {
+  .globeContainerStyle {
+    height: calc(100vh - 87px);
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .globeContainerStyle {
+    aspect-ratio: 1/1;
+    width: 100%;
+    min-height: 400px;
+    max-height:  calc(100vh - 125px);
+    /* aspect[1/0.75] min-h-[400px] */
+  
+    /* height: calc(100vh - 87px); */
+  }
+}
