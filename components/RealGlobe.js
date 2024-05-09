@@ -11,7 +11,7 @@ const GlobeTmpl = dynamic(() => import("./GlobeTmpl.js"), {
 const GlobeFowareded = React.forwardRef((props, ref) => (
   <GlobeTmpl {...props} forwardRef={ref} />
 ));
-
+GlobeFowareded.displayName = 'GlobeFowareded';
 const Globe = ({ sheetHandler = undefined }) => {
   const { selectedCountry, setSelectedCountry } = useSelectedCountry();
 
